@@ -1,12 +1,24 @@
 pipeline {
     agent any
+    environment {
+        PATH = "/opt/apache-maven-3.8.1/bin/:$PATH"
+    }
 
     stages {
-        stage('Hello') {
+        stage('fetch code from github') {
             steps {
-                echo 'Hello World'
+                git 'https://github.com/gouthamguntuku12/springboot.git'
+            }
+        }
+        stage('buid a package') {
+            steps {
+                sh 'mvn clean package install'
+            }
+        }
+        stage('tomcat deploy') {
+            steps {
+                sh 'mvn clean package install'
             }
         }
     }
 }
-
